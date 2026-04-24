@@ -52,7 +52,6 @@ Exemples :
 | Filière | PROMO_CODE |
 |---|---|
 | Master IA (promo 2025) | `CMIAE1/25` |
-| Licence Info (promo 2024) | `LISI3/24` |
 | *(autre)* | *(le texte exact du lien sur l'ENT)* |
 
 ---
