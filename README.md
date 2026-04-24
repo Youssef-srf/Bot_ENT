@@ -1,4 +1,4 @@
-# 🎓 CheckNotes — Bot de Notification de Notes ENT UH2C
+# 🎓 Bot_ENT — Bot de Notification de Notes ENT UH2C
 
 > Bot de surveillance automatique des notes pour les étudiants de l'**Université Hassan II de Casablanca** (FSBM et autres facultés). Reçois une alerte Telegram dès que de nouvelles notes apparaissent sur ton dossier pédagogique ENT — gratuitement, 24h/24.
 
