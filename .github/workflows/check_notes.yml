@@ -1,0 +1,48 @@
+name: Check ENT Notes
+
+on:
+  schedule:
+    - cron: '0 8-18 * * 1-5' # Vérifie toutes les heures, lun–ven, 8h–18h
+  workflow_dispatch:           # Lancement manuel possible
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Nécessaire pour le git push de last_notes.txt
+
+    steps:
+      - name: Récupération du code
+        uses: actions/checkout@v3
+
+      - name: Installation de Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Configuration de Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Installation des dépendances Python
+        run: pip install -r requirements.txt
+
+      - name: Exécution du Bot
+        env:
+          ENT_USER: ${{ secrets.ENT_USER }}
+          ENT_PASS: ${{ secrets.ENT_PASS }}
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          PROMO_CODE: ${{ secrets.PROMO_CODE }}
+        run: python bot_notes.py
+
+      - name: Sauvegarder l'état des notes
+        run: |
+          git config --global user.name 'NotesBot'
+          git config --global user.email 'bot@noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git pull --rebase
+          git add last_notes.txt
+          git commit -m "Mise à jour du cache des notes [skip ci]" || exit 0
+          git push
